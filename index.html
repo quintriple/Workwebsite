@@ -53,6 +53,7 @@
     <script>
         document.getElementById('message').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
+                e.preventDefault(); // Prevent form submission if inside a form
                 sendMessage();
             }
         });
@@ -81,6 +82,14 @@
                 const botMessage = document.createElement('div');
                 botMessage.classList.add('message', 'bot');
                 botMessage.textContent = data.response;
+                chatbox.appendChild(botMessage);
+                chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to latest message
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const botMessage = document.createElement('div');
+                botMessage.classList.add('message', 'bot');
+                botMessage.textContent = 'Sorry, there was a problem with the request.';
                 chatbox.appendChild(botMessage);
                 chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to latest message
             });
